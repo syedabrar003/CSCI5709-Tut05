@@ -1,5 +1,6 @@
 const userData = require('../model/userModel');
 
+//  searches the user with key value pair
 const searchUser = (key,value)=>{
     const match = userData.find(userData=>{
         return userData[key] === value;
@@ -8,11 +9,13 @@ const searchUser = (key,value)=>{
     return match;
 }
 
-const addUser = (key,user)=>{  
+//  adds new user
+const addUser = (key,user)=>{
     userData.push(user);
     return user;
 }
 
+//  update the user with key value pair
 const updateUser =(key,value)=>{
     try{
         let userId = value.uuid;
@@ -22,7 +25,7 @@ const updateUser =(key,value)=>{
             user.username = value.username;
             user.email=value.email;
             return user;
-        }   
+        }
     }
     catch(err){
         res.status(406).json({
@@ -33,7 +36,7 @@ const updateUser =(key,value)=>{
     }
 }
 
-
+//  module exports
 module.exports.searchUser = searchUser;
 module.exports.addUser = addUser;
 module.exports.updateUser = updateUser;
