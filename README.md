@@ -2,12 +2,12 @@
 
 ReactJS application which performs the following tasks:
 
-Task 1 - Implement asynchronous autosuggestion for the search bar using movie api.
+Task 1 - 
 
-Task 2 - Show selected movie details in a different page/component.
+Task 2 - 
 
-* Date Created: 1 June 2020
-* Last Modification Date: 1 June 2020
+* Date Created: 21 June 2020
+* Last Modification Date: 23 June 2020
 
 ## Authors
 
