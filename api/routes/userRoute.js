@@ -1,13 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const uuid = require('uuid');
+const Joi = require("joi");
 
-
-const{ searchUser } = require('../controllers/userController');
+const{ searchUser,addUser ,updateUser } = require('../controllers/userController');
 const userData = require('../model/userModel');
+const { json } = require('body-parser');
 
 router.get('/',(req,res)=>{
     res.status(200).json(userData);
 })
+
 
 router.get('/specific/:uuid',(req,res)=>{
     try{
@@ -24,37 +27,66 @@ router.get('/specific/:uuid',(req,res)=>{
         })
     }
 })
-/*
-router.post('/',(req,res)=>{
-    //console.log(req.body.uuid+req.body.username+req.body.email);
-    const p = { uuid:req.body.uuid, username:req,body,username, email:req.body.email};
-    res.push(p);
-    res.status(201).json({
-        message:"User Created"
-    });
 
-});
-*/
 router.post('/',(req,res,next)=>{
-    console.log(req.body);
+
+    const userid = uuid.v1()
+    const requser = {
+        uuid: userid,
+        username: req.body.username,
+        email: req.body.email
+    };
+    const validResult = validatePostUser(req.body);
+    if (validResult.error) {
+        res.status(400).send(validResult.error.details[0].message);
+        return;
+    }
+    const resUser = addUser("username",requser);
+    
+    res.status(200);
     res.send({
-        "uuid": "e9004f7-8237-43b2-844f-a3f794a41e90",
-        "username": "test3",
-        "email": "test3@gmail.com"
-    })
-    res.send({
-        type: 'POST',
-        uuid:req.body.uuid,
-        username:req.body.username,
-        email:req.body.email
+        message:"user added successfully",
+        uuid:userid,
+        username:resUser.username,
+        email:resUser.email
     });
 })
 
-router.put('/:uuid',(req,res)=>{
-    console.log('PUT ');
-    res.send({"uuid": "e9004f7-8237-43b2-844f-a3f794a41e90",
-    "username": "test33",
-    "email": "test33@gmail.com"})
+router.put('/',(req,res,next)=>{
+    try{
+        const requestUser = {
+            uuid: req.body.uuid,
+            username: req.body.username,
+            email: req.body.email
+        };
+        const updatedUser=updateUser("uuid", requestUser);
+        res.status(200);
+        res.send({
+            message:"user updated successfully",
+            uuid:updatedUser.userid,
+            username:updatedUser.username,
+            email:updatedUser.email
+        });
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).json({
+            success: false,
+            error:err,
+            message: "User not found"
+        })
+    }
 })
+
+
+function validatePostUser(user) {
+    const schema = {
+      username: Joi.string().min(1).required(),
+      email: Joi.string().min(1).required(),
+    };
+  
+    return Joi.validate(user, schema);
+  }
+
 
 module.exports = router;
