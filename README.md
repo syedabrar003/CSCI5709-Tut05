@@ -1,13 +1,13 @@
 # CSCI5709-GROUP13-TUT5
 
-ReactJS application which performs the following tasks:
+ReactJS application which creates 2 REST APIs in addition to get requests:
 
-Task 1 - Implement asynchronous autosuggestion for the search bar using movie api.
+Task 1 - Create a REST Api to add new users (POST REQUEST)
 
-Task 2 - Show selected movie details in a different page/component.
+Task 2 - Create a REST Api to modify existing user (PUT REQUEST)
 
-* Date Created: 1 June 2020
-* Last Modification Date: 1 June 2020
+* Date Created: 23 June 2020
+* Last Modification Date: 23 June 2020
 
 ## Authors
 
@@ -19,7 +19,7 @@ Task 2 - Show selected movie details in a different page/component.
 
 ## Getting Started
 
-* Repository link: [click here](https://github.com/neatcoder/CSCI5709-GROUP13-TUT04)
+* Repository link: [click here](https://github.com/syedabrar003/CSCI5709-Tut05)
 * Heroku deployment link: [click here](https://csci5709-group13-tut04.herokuapp.com/)
 
 ## Built With
