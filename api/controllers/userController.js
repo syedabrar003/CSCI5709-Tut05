@@ -31,7 +31,7 @@ const updateUser =(key,value)=>{
         res.status(406).json({
             success: false,
             error:err,
-            message: "User not Exist with uuid"
+            message: "User does not Exist with uuid"
         })
     }
 }
