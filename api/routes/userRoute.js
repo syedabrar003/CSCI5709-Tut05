@@ -59,6 +59,11 @@ router.put('/',(req,res,next)=>{
             username: req.body.username,
             email: req.body.email
         };
+		const validResult = validatePutUser(req.body);
+		if (validResult.error) {
+			res.status(400).send(validResult.error.details[0].message);
+			return;
+		}
         const updatedUser=updateUser("uuid", requestUser);
         res.status(200);
         res.send({
@@ -87,6 +92,17 @@ function validatePostUser(user) {
   
     return Joi.validate(user, schema);
   }
+
+function validatePutUser(user)
+{
+  const schema={
+    uid:Joi.number().min(1).required(),
+    username:Joi.string().min(1).required(),
+    email:Joi.string().min(1).required()
+  };
+
+  return Joi.validate(user,schema);
+}
 
 
 module.exports = router;
